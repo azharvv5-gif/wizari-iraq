@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>وزاري العراق | السادس الإعدادي</title>
+  <style>
+    :root { --navy:#10243a; --panel:#1d3852; --mint:#2dd4bf; --ink:#172638; --muted:#607286; --paper:#f4f7fb; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Tahoma,Arial,sans-serif; background:var(--paper); color:var(--ink); line-height:1.7; }
+    header { background:var(--navy); color:white; padding:22px 18px 34px; }
+    .wrap { max-width:1050px; margin:auto; }
+    nav { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:bold; font-size:1.15rem; }
+    .logo { display:grid; place-items:center; width:44px; height:44px; background:var(--mint); color:var(--navy); border-radius:12px; font-size:1.4rem; }
+    .pill { color:#d5e3ef; font-size:.9rem; }
+    .hero { padding-top:32px; max-width:680px; }
+    h1 { font-size:clamp(1.8rem,5vw,3rem); line-height:1.25; margin:0 0 12px; }
+    .hero p { color:#d5e3ef; margin:0 0 20px; }
+    .btn { border:0; border-radius:10px; background:var(--mint); color:var(--navy); padding:12px 18px; font-weight:bold; cursor:pointer; font:inherit; }
+    main { padding:26px 18px 48px; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:12px; flex-wrap:wrap; margin:0 0 16px; }
+    h2 { margin:0; font-size:1.4rem; }
+    .muted { color:var(--muted); font-size:.95rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+    .card { background:white; border:1px solid #e0e8f0; border-radius:16px; padding:18px; box-shadow:0 5px 18px #10243a0b; }
+    .subject-icon { font-size:1.7rem; }
+    .card h3 { margin:8px 0 4px; }
+    .card p { margin:0 0 14px; color:var(--muted); font-size:.92rem; }
+    .card button { background:#e5fbf7; color:#11685f; border:0; border-radius:9px; padding:9px 12px; cursor:pointer; font:inherit; font-weight:bold; }
+    .tools { display:flex; gap:10px; flex-wrap:wrap; margin:20px 0; }
+    input, select { padding:11px 12px; border:1px solid #cbd7e3; border-radius:10px; font:inherit; background:white; }
+    input { flex:1; min-width:190px; }
+    .question { margin-top:22px; }
+    .question h3 { margin-top:0; }
+    .answer { background:#f0fdfa; border-right:4px solid var(--mint); padding:12px 14px; border-radius:8px; margin-top:10px; }
+    .notice { border:1px dashed #b5c5d6; background:#fff; padding:14px; border-radius:12px; margin-top:20px; color:#53677a; }
+    footer { background:var(--navy); color:#d5e3ef; padding:20px 18px; text-align:center; font-size:.9rem; }
+    @media (max-width:600px) { header { padding-bottom:26px; } .hero { padding-top:25px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><div class="logo">🎓</div><div>وزاري العراق<div class="pill">منصتك للنجاح والتفوق</div></div></div>
+      <span class="pill">السادس الإعدادي</span>
+    </nav>
+    <section class="hero">
+      <h1>استعد للوزاري بثقة</h1>
+      <p>مكان واحد لترتيب المواد والأسئلة الوزارية والتدريب على الامتحانات السابقة.</p>
+      <button class="btn" onclick="document.querySelector('#subjects').scrollIntoView({behavior:'smooth'})">تصفّح المواد ↓</button>
+    </section>
+  </div>
+</header>
+<main class="wrap">
+  <section id="subjects">
+    <div class="section-head">
+      <div><h2>اختَر المادة</h2><div class="muted">نسخة تجريبية قابلة للتطوير</div></div>
+    </div>
+    <div class="grid" id="subjectGrid"></div>
+  </section>
+  <section class="question card" id="questionArea">
+    <div class="section-head"><div><h2>أسئلة تدريبية</h2><div class="muted">هذه أمثلة توضيحية وليست أسئلة وزارية موثّقة.</div></div></div>
+    <div class="tools">
+      <input id="search" type="search" placeholder="ابحث عن سؤال أو مادة..." aria-label="ابحث عن سؤال أو مادة">
+      <select id="filter" aria-label="تصفية حسب المادة"><option value="all">كل المواد</option></select>
+    </div>
+    <div id="questions"></div>
+  </section>
+  <div class="notice">ملاحظة: قبل نشر الأسئلة الرسمية، أضف سنة الامتحان والدور والمصدر وتحقق من الحلول. هذه النسخة لا تحتوي على حسابات طلاب أو قاعدة بيانات بعد.</div>
+</main>
+<footer><div class="wrap">وزاري العراق © <span id="year"></span> — مشروع تعليمي تجريبي</div></footer>
+<script>
+const subjects = [
+  {id:'math',name:'الرياضيات',icon:'📐',desc:'تمارين وأسئلة مع خطوات الحل'},
+  {id:'physics',name:'الفيزياء',icon:'⚛️',desc:'مسائل ومفاهيم علمية'},
+  {id:'chemistry',name:'الكيمياء',icon:'🧪',desc:'معادلات وأسئلة تدريبية'},
+  {id:'biology',name:'الأحياء',icon:'🧬',desc:'تعريفات ورسومات ومراجعة'},
+  {id:'arabic',name:'اللغة العربية',icon:'📚',desc:'قواعد وأدب ونصوص'},
+  {id:'english',name:'اللغة الإنجليزية',icon:'🔤',desc:'قواعد وقطع وأسئلة'},
+  {id:'islamic',name:'التربية الإسلامية',icon:'🕌',desc:'أسئلة ومراجعة'}
+];
+const questions = [
+  {subject:'physics',title:'مثال تدريبي: ما وحدة قياس الشغل في النظام الدولي؟',answer:'الجول (J)، ويساوي نيوتن·متر. هذا سؤال توضيحي للتدريب.'},
+  {subject:'chemistry',title:'مثال تدريبي: ما المقصود بالاتزان الكيميائي؟',answer:'حالة تتساوى فيها سرعتا التفاعل الأمامي والعكسي، وتبقى تراكيز المواد ثابتة ظاهرياً.'},
+  {subject:'math',title:'مثال تدريبي: ما الفكرة الأساسية قبل حل معادلة؟',answer:'تحديد نوع المعادلة ثم إجراء عمليات متكافئة على الطرفين للمحافظة على المساواة.'},
+  {subject:'arabic',title:'مثال تدريبي: ما وظيفة النعت؟',answer:'النعت يبيّن صفة في المنعوت ويتبعه في الإعراب والتعريف أو التنكير، وفق موضعه.'}
+];
+const subjectName = id => subjects.find(s => s.id === id)?.name || id;
+const grid = document.querySelector('#subjectGrid');
+const filter = document.querySelector('#filter');
+subjects.forEach(s => {
+  grid.insertAdjacentHTML('beforeend', `<article class="card"><div class="subject-icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p><button data-subject="${s.id}">عرض أسئلة المادة</button></article>`);
+  filter.insertAdjacentHTML('beforeend', `<option value="${s.id}">${s.name}</option>`);
+});
+function renderQuestions() {
+  const term = document.querySelector('#search').value.trim().toLowerCase();
+  const chosen = filter.value;
+  const list = questions.filter(q => (chosen === 'all' || q.subject === chosen) && (q.title+' '+q.answer+' '+subjectName(q.subject)).toLowerCase().includes(term));
+  document.querySelector('#questions').innerHTML = list.length ? list.map(q => `<article class="card" style="margin-bottom:12px"><div class="muted">${subjectName(q.subject)}</div><h3>${q.title}</h3><details><summary>عرض الإجابة</summary><div class="answer">${q.answer}</div></details></article>`).join('') : '<p class="muted">ماكو نتائج. جرّب كلمة ثانية أو اختَر كل المواد.</p>';
+}
+document.querySelector('#search').addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+grid.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-subject]');
+  if (!btn) return;
+  filter.value = btn.dataset.subject;
+  renderQuestions();
+  document.querySelector('#questionArea').scrollIntoView({behavior:'smooth'});
+});
+document.querySelector('#year').textContent = new Date().getFullYear();
+renderQuestions();
+</script>
+</body>
+</html>
